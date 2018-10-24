@@ -4,6 +4,7 @@ import br.academico.Model.Aluno;
 import br.academico.Model.Curso;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,5 +45,17 @@ public class AlunoDAO {
         conn.close();
         return alunos;
     }
+    
+    public void inserirAluno(Aluno a, int idCurso) throws SQLException {
+        conn = DriverManager.getConnection(urlBD, "root", "");
+        
+        PreparedStatement st = conn.prepareStatement("insert into \"tb_alunos\" (RA, NOME, IDCURSO) VALUES (?, ?, ?)");
+        st.setInt(1, a.getRA());
+        st.setString(2, a.getNomeAluno());
+        st.setInt(3, idCurso);
+        st.executeUpdate();
+        conn.close();
+    }
+    
     
 }

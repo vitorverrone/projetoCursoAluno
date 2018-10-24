@@ -4,6 +4,9 @@ import br.academico.DAO.AlunoDAO;
 import br.academico.Model.Aluno;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +26,11 @@ public class incluirAluno extends HttpServlet {
             a.setNomeAluno(request.getParameter("nome"));
             int idCurso = Integer.parseInt(request.getParameter("idCurso"));
             
-            aDAO.inserirAluno(a, idCurso);
+            try {
+                aDAO.inserirAluno(a, idCurso);
+            } catch (SQLException ex) {
+                Logger.getLogger(incluirAluno.class.getName()).log(Level.SEVERE, null, ex);
+            }
             response.sendRedirect("listarTodos.jsp");
             
         }
